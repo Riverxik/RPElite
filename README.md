@@ -1,0 +1,1 @@
+# Roleplay Overlay for Elite Dangerous
