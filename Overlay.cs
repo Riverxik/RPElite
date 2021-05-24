@@ -11,6 +11,9 @@ namespace RPElite
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
+        private LogChecker _log;
+        private int count;
+
         enum KeyModifier
         {
             None = 0,
@@ -24,6 +27,7 @@ namespace RPElite
 
         public Overlay()
         {
+            // Form.
             InitializeComponent();
             this.BackColor = Color.LimeGreen;
             this.TransparencyKey = Color.LimeGreen;
@@ -31,8 +35,19 @@ namespace RPElite
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
 
+            // Hot key.
             int id = 0; // id for hide/unhide gui
-            RegisterHotKey(this.Handle, id, (int) KeyModifier.None, Keys.Oem3.GetHashCode());
+            RegisterHotKey(this.Handle, id, (int)KeyModifier.None, Keys.Oem3.GetHashCode());
+
+            // Panel.
+            this.panel.Left = (this.ClientSize.Width - this.panel.Width) / 2;
+            this.panel.Top = 10;
+            //this.panel.Top = (this.ClientSize.Height - this.panel.Height) / 2;
+
+            // Textbox Log
+            this.tbLog.BackColor = Color.FromArgb(200, 113, 0);
+            _log = new LogChecker();
+            _log.newEntryHandler += LogNewEntryHandler;
 
             // Game mechanics.
             this.commander = new Commander();
@@ -40,6 +55,11 @@ namespace RPElite
             
             // Timer for one minute (5 sec test).
             this.timerOneMinute.Start();
+        }
+
+        private void LogNewEntryHandler(object sender, LogEvent e)
+        {
+            this.tbLog.AppendText(e.GetString() + "\r\n");
         }
 
         protected override void WndProc(ref Message m)
@@ -53,6 +73,8 @@ namespace RPElite
 
         private void ButtonExit_Click(object sender, EventArgs e)
         {
+            this._log.sr.Close();
+            this._log.fs.Close();
             this.Close();
         }
 
@@ -61,10 +83,15 @@ namespace RPElite
             UnregisterHotKey(this.Handle, 0);
         }
 
-        private void TimerOneMinute_Tick(object sender, EventArgs e)
+        private void TimerOneSecond_Tick(object sender, EventArgs e)
         {
-            this.commander.DecreaseStats();
+            if (count % 5 == 0) // Every 5 seconds.
+            {
+                this.commander.DecreaseStats();
+                this._log.readLog();
+            }
             UpdateGUI();
+            if (count > 255) { count = 0; } else { count++; }
         }
 
         private void UpdateGUI()
@@ -72,9 +99,13 @@ namespace RPElite
             this.pbFood.Value = this.commander.GetFood();
             this.pbWater.Value = this.commander.GetWater();
             this.pbSleep.Value = this.commander.GetSleep();
-            this.panel.Left = (this.ClientSize.Width - this.panel.Width) / 2;
-            this.panel.Top = 10;
-            //this.panel.Top = (this.ClientSize.Height - this.panel.Height) / 2;
+            this.tbLog.SelectionStart = this.tbLog.Text.Length;
+            this.tbLog.SelectionLength = 0;
+        }
+
+        private void buttonEat_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
