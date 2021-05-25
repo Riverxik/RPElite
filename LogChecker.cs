@@ -15,7 +15,7 @@ namespace RPElite
         public LogChecker()
         {
             fs = new FileStream("test.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            sr = new StreamReader(fs, System.Text.Encoding.Default);
+            sr = new StreamReader(fs, System.Text.Encoding.UTF8);
         }
 
         public void ReadLog()

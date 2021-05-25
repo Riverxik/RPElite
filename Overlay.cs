@@ -12,6 +12,7 @@ namespace RPElite
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         private readonly LogChecker _log;
+        private bool isDebug;
         private int count;
 
         enum KeyModifier
@@ -27,6 +28,7 @@ namespace RPElite
 
         public Overlay()
         {
+            isDebug = false;
             // Form.
             InitializeComponent();
             this.BackColor = Color.LimeGreen;
@@ -59,7 +61,9 @@ namespace RPElite
 
         private void LogNewEntryHandler(object sender, LogEvent e)
         {
-            this.tbLog.AppendText(EventLogger.GetPrettyLog(e.GetString()) + "\r\n");
+            string entry = EventLogger.GetPrettyLog(e.GetString());
+            if (entry.StartsWith("->"))
+                this.tbLog.AppendText(entry + "\r\n");
             this.tbLog.SelectionStart = this.tbLog.Text.Length;
             this.tbLog.SelectionLength = 0;
         }

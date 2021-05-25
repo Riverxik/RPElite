@@ -27,7 +27,7 @@ namespace RPElite
                 case "Liftoff": return DoLiftoff(obj);
                 case "Touchdown": return DoTouchdown(obj);
                 case "Undocked": return DoUndocked(obj);
-                default: return rawEntry;
+                default: return "Undefined: " + rawEntry;
             }
         }
 
@@ -92,7 +92,7 @@ namespace RPElite
 
         private static string DoFSDTarget(JObject obj)
         {
-            string starSystem = obj.Value<string>("StarSystem");
+            string starSystem = obj.Value<string>("Name");
             string starClass = obj.Value<string>("StarClass");
             int jumps = obj.Value<int>("RemainingJumpsInRoute");
             return string.Format("-> Новая цель: [{0}]({1}), осталось прыжков: {2}", starSystem, starClass, jumps);
