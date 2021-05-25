@@ -7,7 +7,6 @@ namespace RPElite
     class LogChecker
     {
         private const string _elitePath = "\\Saved Games\\Frontier Developments\\Elite Dangerous\\";
-        private const int CHECK_DELAY = 5000;
 
         public EventHandler<LogEvent> newEntryHandler;
         public FileStream fs;
@@ -19,7 +18,7 @@ namespace RPElite
             sr = new StreamReader(fs, System.Text.Encoding.Default);
         }
 
-        public void readLog()
+        public void ReadLog()
         {
             string line;
             while ((line = sr.ReadLine()) != null && !line.Equals(""))
@@ -31,7 +30,7 @@ namespace RPElite
 
     class LogEvent : EventArgs
     {
-        private string _logEntry;
+        private readonly string _logEntry;
         public LogEvent(string entry)
         {
             this._logEntry = entry;

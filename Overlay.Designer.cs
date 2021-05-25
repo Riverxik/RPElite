@@ -32,7 +32,6 @@ namespace RPElite
             this.components = new System.ComponentModel.Container();
             this.panel = new System.Windows.Forms.Panel();
             this.tbLog = new System.Windows.Forms.TextBox();
-            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
             this.buttonSleep = new RPElite.RPButton();
             this.buttonDrink = new RPElite.RPButton();
             this.buttonEat = new RPElite.RPButton();
@@ -40,6 +39,7 @@ namespace RPElite
             this.pbWater = new RPElite.RPProgressBar();
             this.buttonExit = new RPElite.RPButton();
             this.pbFood = new RPElite.RPProgressBar();
+            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,11 +70,6 @@ namespace RPElite
             this.tbLog.Size = new System.Drawing.Size(400, 180);
             this.tbLog.TabIndex = 8;
             // 
-            // timerOneMinute
-            // 
-            this.timerOneMinute.Interval = 1000;
-            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
-            // 
             // buttonSleep
             // 
             this.buttonSleep.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -84,6 +79,7 @@ namespace RPElite
             this.buttonSleep.Size = new System.Drawing.Size(63, 23);
             this.buttonSleep.TabIndex = 6;
             this.buttonSleep.Text = "Sleep";
+            this.buttonSleep.Click += new System.EventHandler(this.ButtonSleep_Click);
             // 
             // buttonDrink
             // 
@@ -94,6 +90,7 @@ namespace RPElite
             this.buttonDrink.Size = new System.Drawing.Size(63, 23);
             this.buttonDrink.TabIndex = 5;
             this.buttonDrink.Text = "Drink";
+            this.buttonDrink.Click += new System.EventHandler(this.ButtonDrink_Click);
             // 
             // buttonEat
             // 
@@ -106,7 +103,7 @@ namespace RPElite
             this.buttonEat.Size = new System.Drawing.Size(63, 23);
             this.buttonEat.TabIndex = 4;
             this.buttonEat.Text = "Eat";
-            this.buttonEat.Click += new System.EventHandler(this.buttonEat_Click);
+            this.buttonEat.Click += new System.EventHandler(this.ButtonEat_Click);
             // 
             // pbSleep
             // 
@@ -175,6 +172,11 @@ namespace RPElite
             this.pbFood.TabIndex = 1;
             this.pbFood.Text = "Food";
             this.pbFood.Value = 86;
+            // 
+            // timerOneMinute
+            // 
+            this.timerOneMinute.Interval = 1000;
+            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
             // 
             // Overlay
             // 

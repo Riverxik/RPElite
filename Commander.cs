@@ -33,5 +33,20 @@ namespace RPElite
         public int GetFood() { return this.food; }
         public int GetWater() { return this.water; }
         public int GetSleep() { return this.sleep; }
+
+        public void AddFood(int amount)
+        {
+            if (this.food + amount < MAX_FOOD) this.food += amount; else this.food = MAX_FOOD;
+        }
+
+        public void AddWater(int amount)
+        {
+            if (this.water + amount < MAX_WATER) this.water += amount; else this.water = MAX_WATER;
+        }
+
+        public void AddSleep()
+        {
+            this.sleep = MAX_SLEEP;
+        }
     }
 }

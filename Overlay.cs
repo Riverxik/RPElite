@@ -11,7 +11,7 @@ namespace RPElite
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        private LogChecker _log;
+        private readonly LogChecker _log;
         private int count;
 
         enum KeyModifier
@@ -59,7 +59,9 @@ namespace RPElite
 
         private void LogNewEntryHandler(object sender, LogEvent e)
         {
-            this.tbLog.AppendText(e.GetString() + "\r\n");
+            this.tbLog.AppendText(EventLogger.GetPrettyLog(e.GetString()) + "\r\n");
+            this.tbLog.SelectionStart = this.tbLog.Text.Length;
+            this.tbLog.SelectionLength = 0;
         }
 
         protected override void WndProc(ref Message m)
@@ -88,7 +90,7 @@ namespace RPElite
             if (count % 5 == 0) // Every 5 seconds.
             {
                 this.commander.DecreaseStats();
-                this._log.readLog();
+                this._log.ReadLog();
             }
             UpdateGUI();
             if (count > 255) { count = 0; } else { count++; }
@@ -99,13 +101,21 @@ namespace RPElite
             this.pbFood.Value = this.commander.GetFood();
             this.pbWater.Value = this.commander.GetWater();
             this.pbSleep.Value = this.commander.GetSleep();
-            this.tbLog.SelectionStart = this.tbLog.Text.Length;
-            this.tbLog.SelectionLength = 0;
         }
 
-        private void buttonEat_Click(object sender, EventArgs e)
+        private void ButtonEat_Click(object sender, EventArgs e)
         {
-            
+            this.commander.AddFood(3);
+        }
+
+        private void ButtonDrink_Click(object sender, EventArgs e)
+        {
+            this.commander.AddWater(5);
+        }
+
+        private void ButtonSleep_Click(object sender, EventArgs e)
+        {
+            this.commander.AddSleep();
         }
     }
 }
