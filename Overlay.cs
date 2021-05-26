@@ -17,7 +17,6 @@ namespace RPElite
         private readonly Color entryColor = Color.MediumVioletRed;
 
         private readonly LogChecker _log;
-        private bool isDebug;
         private int count;
 
         enum KeyModifier
@@ -33,7 +32,6 @@ namespace RPElite
 
         public Overlay()
         {
-            isDebug = false;
             // Form.
             InitializeComponent();
             this.BackColor = Color.LimeGreen;

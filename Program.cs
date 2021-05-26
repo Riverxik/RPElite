@@ -7,6 +7,7 @@ namespace RPElite
 {
     static class Program
     {
+        public static readonly bool isDebug = false;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>

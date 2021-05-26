@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace RPElite
@@ -7,6 +9,7 @@ namespace RPElite
     class LogChecker
     {
         private const string _elitePath = "\\Saved Games\\Frontier Developments\\Elite Dangerous\\";
+        public static int part = 1;
 
         public EventHandler<LogEvent> newEntryHandler;
         public FileStream fs;
@@ -14,13 +17,33 @@ namespace RPElite
 
         public LogChecker()
         {
-            fs = new FileStream("test.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            string filename;
+            if (Program.isDebug) filename = "test.log"; else filename = GetCorrectFilename();
+            Console.WriteLine(filename);
+            fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             sr = new StreamReader(fs, System.Text.Encoding.UTF8);
+        }
+
+        private string GetCorrectFilename()
+        {
+            // Example: Journal.21 05 25 22:11:51.01 = Journal.210525221151.01
+            DateTime timeNow = DateTime.Now;
+            string timePattern = @"yyMMddHHmmss";
+            string time = timeNow.ToString(timePattern, System.Globalization.CultureInfo.InvariantCulture);
+            string shouldLog = string.Format("Journal.{0}.0{1}", time, part);
+            string fileMask = shouldLog.Substring(0, shouldLog.Length - 7);
+            Regex searchPattern = new Regex(fileMask);
+            string userprofile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string fullPath = userprofile + _elitePath;
+            string[] files = Directory.GetFiles(fullPath).Where(f => searchPattern.IsMatch(f)).ToArray();
+            if (files.Length == 0) throw new InvalidOperationException("Can't read logfile");
+            return files[0];
         }
 
         public void ReadLog()
         {
             string line;
+            if (sr == null) throw new InvalidOperationException("Can't read logfile");
             while ((line = sr.ReadLine()) != null && !line.Equals(""))
             {
                 newEntryHandler.Invoke(this, new LogEvent(line));
