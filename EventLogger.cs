@@ -9,6 +9,13 @@ namespace RPElite
             JObject obj = JObject.Parse(rawEntry);
             switch (obj.Value<string>("event"))
             {
+                // Game start.
+                case "Commander": return DoCommander(obj);
+                case "Materials": return DoMaterials(obj);
+                case "ShipLockerMaterials": return DoShipLockerMaterials(obj);
+                case "Rank": return DoRank(obj);
+                case "LoadGame": return DoLoadGame(obj);
+                case "Location": return DoLocation(obj);
                 // Travel events.
                 // Docking.
                 case "Docked": return DoDocked(obj);
@@ -27,8 +34,229 @@ namespace RPElite
                 case "Liftoff": return DoLiftoff(obj);
                 case "Touchdown": return DoTouchdown(obj);
                 case "Undocked": return DoUndocked(obj);
+                // Chat.
+                case "ReceiveText": return DoReceiveText(obj);
                 default: return "Undefined: " + rawEntry;
             }
+        }
+
+        private static string DoCommander(JObject obj)
+        {
+            string name = obj.Value<string>("Name");
+            return string.Format("<-- Загрузка интерфейса -->\r\n<-- Пилот: {0} -->", name);
+        }
+
+        private static string DoMaterials(JObject obj)
+        {
+            return "<-- Считывание информации о материалах -->";
+        }
+
+        private static string DoShipLockerMaterials(JObject obj)
+        {
+            string res = "<-- Считывание информации о предметах на корабле -->";
+            // Items, Components, Data
+            JArray consumables = obj.Value<JArray>("Consumables");
+            foreach (JObject item in consumables.Children())
+            {
+                string name = item.Value<string>("Name");
+                string localized = item.Value<string>("Name_Localised");
+                int count = item.Value<int>("Count");
+                if (localized.Length > 0) name = localized;
+                res += string.Format("\r\n>> Предмет: {0}, количество: {1} <<", name, count);
+            }
+            return res;
+        }
+
+        private static string DoRank(JObject obj)
+        {
+            string res = "<-- Считывание информации о рангах -->";
+            string combat = GetCombatRank(obj.Value<int>("Combat"));
+            string trade = GetTradeRank(obj.Value<int>("Trade"));
+            string explore = GetExploreRank(obj.Value<int>("Explore"));
+            string soldier = GetSoldierRank(obj.Value<int>("Soldier"));
+            string exobiologist = GetExobiologistRank(obj.Value<int>("Exobiologist"));
+            string empire = GetEmpireRank(obj.Value<int>("Empire"));
+            string federation = GetFederalRank(obj.Value<int>("Federation"));
+            res += string.Format("\r\n>> Боевой: {0} <<\r\n>> Торговый: {1} <<\r\n>> Исследовательский: {2} <<", combat, trade, explore);
+            res += string.Format("\r\n>> Наёмник: {0} <<\r\n>> Экзобиолог: {1} <<", soldier, exobiologist);
+            res += string.Format("\r\n>> Империя: {0} <<\r\n>> Федерация: {1} <<", empire, federation);
+            return res;
+        }
+
+        private static string GetCombatRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Безвредный";
+                case 1: return "В целом безвредный";
+                case 2: return "Новичок";
+                case 3: return "Специалист";
+                case 4: return "Эксперт";
+                case 5: return "Мастер";
+                case 6: return "Опасный";
+                case 7: return "Смертоносный";
+                case 8: return "Элита";
+            }
+        }
+
+        private static string GetTradeRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Нищий";
+                case 1: return "Полунищий";
+                case 2: return "Мелкий торговец";
+                case 3: return "Агент";
+                case 4: return "Коммерсант";
+                case 5: return "Брокер";
+                case 6: return "Предприниматель";
+                case 7: return "Магнат";
+                case 8: return "Элита";
+            }
+        }
+
+        private static string GetExploreRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Бесцельный";
+                case 1: return "Почти бесцельный";
+                case 2: return "Разведчик";
+                case 3: return "Изыскатель";
+                case 4: return "Путешественник";
+                case 5: return "Следопыт";
+                case 6: return "Скиталец";
+                case 7: return "Первопроходец";
+                case 8: return "Элита";
+            }
+        }
+
+        private static string GetSoldierRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Беззащитный";
+                case 1: return "Почти беззащитный";
+                case 2: return "Новобранец";
+                case 3: return "Солдат";
+                case 4: return "Стрелок";
+                case 5: return "Воин";
+                case 6: return "Градиатор";
+                case 7: return "Снайпер";
+                case 8: return "Элита";
+            }
+        }
+
+        private static string GetExobiologistRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Бесцельный";
+                case 1: return "Почти бесцельный";
+                case 2: return "Составитель";
+                case 3: return "Сборщик";
+                case 4: return "Каталогер";
+                case 5: return "Систематик";
+                case 6: return "Эколог";
+                case 7: return "Генетик";
+                case 8: return "Элита";
+            }
+        }
+
+        private static string GetEmpireRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Чужак";
+                case 1: return "Крепостной";
+                case 2: return "Мастер"; // Imperial Courier
+                case 3: return "Оруженосец"; // Achenar
+                case 4: return "Рыцарь"; 
+                case 5: return "Лорд";
+                case 6: return "Барон"; // Imperial clipper, Summerland
+                case 7: return "Виконт"; 
+                case 8: return "Граф";
+                case 9: return "Эрл"; // Facece
+                case 10: return "Маркиз";
+                case 11: return "Герцог"; // Imperial Cutter
+                case 12: return "Принц";
+                case 13: return "Король";
+            }
+        }
+
+        private static string GetFederalRank(int rank)
+        {
+            switch (rank)
+            {
+                default:
+                case 0: return "Рекрут";
+                case 1: return "Кадет";
+                case 2: return "Гардемарин"; // Federal dropship
+                case 3: return "Старшина"; // Sol
+                case 4: return "Главный старшина"; // Federal assault ship, Vega, Beta Hydri
+                case 5: return "Уорент-офицер"; // PLX 695
+                case 6: return "Энсин"; // Federal Gunship, Ross 128
+                case 7: return "Лейтенант"; // Exbeur
+                case 8: return "Капитан-лейтенант";
+                case 9: return "Начальник гарнизона"; // Hors
+                case 10: return "Командир корабля";
+                case 11: return "Контр-адмирал"; // Federal Corvette
+                case 12: return "Вице-адмирал";
+                case 13: return "Адмирал";
+            }
+        }
+
+        private static string DoLoadGame(JObject obj)
+        {
+            string res = "<-- Проверка состояния пилота -->";
+            string ship = obj.Value<string>("Ship");
+            string shipName = obj.Value<string>("ShipName");
+            int credits = obj.Value<int>("Credits");
+            if (shipName.Length > 0)
+            {
+                // On the ship.
+                res += string.Format("\r\n>> Корабль: {0} ({1})", shipName, ship);
+            } else
+            {
+                // On the ground.
+                string localized = obj.Value<string>("Ship_Localised");
+                if (localized.Length > 0) ship = localized;
+                res += string.Format("\r\n>> Костюм: {0}", ship);
+            }
+            res += string.Format("\r\n>> Кредиты: {0}", credits);
+            return res;
+        }
+
+        private static string DoLocation(JObject obj)
+        {
+            // TODO: implement this correctly.
+            string res = "<-- Проверка местоположения -->";
+            bool isDocked = obj.Value<bool>("Docked");
+            bool isOnFoot = obj.Value<bool>("OnFoot");
+            string starSystem = obj.Value<string>("StarSystem");
+            string body = obj.Value<string>("Body"); // in oddysey on food will be station name
+            double latitude = obj.Value<double>("Latitude");
+            double longitude = obj.Value<double>("Longitude");
+            if (isDocked)
+            {
+                // Probably old horizons version
+                string stationName = obj.Value<string>("StationName"); 
+                string stationType = obj.Value<string>("StationType");
+                res += string.Format("\r\n>> Станция: {0} ({1})", stationName, stationType);
+            }
+            if (isOnFoot)
+            {
+                string bodyType = obj.Value<string>("BodyType");
+                res += string.Format("\r\n>> Станция: {0} ({1})", body, bodyType);
+            }
+            res += "\r\n-------------------------";
+            return res;
         }
 
         private static string DoDocked(JObject obj)
@@ -140,6 +368,18 @@ namespace RPElite
         {
             string stationName = obj.Value<string>("StationName");
             return string.Format("-> Расстыковка с [{0}]", stationName);
+        }
+
+        private static string DoReceiveText(JObject obj)
+        {
+            string from = obj.Value<string>("From");
+            string message = obj.Value<string>("Message");
+            string localized = obj.Value<string>("Message_Localised");
+            if (localized.Length > 0) message = localized;
+            string res;
+            if (from.Length == 0) res = string.Format("-> {0}", message);
+            else res = string.Format("-> [{0}] -->-- {1}", from, message);
+            return res;
         }
     }
 }

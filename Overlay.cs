@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace RPElite
 {
@@ -10,6 +11,10 @@ namespace RPElite
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private readonly Color stationColor = Color.Orange;
+        private readonly Color textMsgColor = Color.BlueViolet;//Color.FromArgb(52, 37, 76);
+        private readonly Color entryColor = Color.MediumVioletRed;
 
         private readonly LogChecker _log;
         private bool isDebug;
@@ -47,12 +52,14 @@ namespace RPElite
             //this.panel.Top = (this.ClientSize.Height - this.panel.Height) / 2;
 
             // Textbox Log
-            this.tbLog.BackColor = Color.FromArgb(200, 113, 0);
+            this.tbLog.BackColor = Color.FromArgb(255, 133, 0);
+            this.rtbLog.BackColor = Color.FromArgb(255, 133, 0);
             _log = new LogChecker();
             _log.newEntryHandler += LogNewEntryHandler;
 
             // Game mechanics.
             this.commander = new Commander();
+            FoodFactory.Init();
             UpdateGUI();
             
             // Timer for one minute (5 sec test).
@@ -62,10 +69,53 @@ namespace RPElite
         private void LogNewEntryHandler(object sender, LogEvent e)
         {
             string entry = EventLogger.GetPrettyLog(e.GetString());
-            if (entry.StartsWith("->"))
+            int length = entry.Length;
+            if (!entry.StartsWith("Undefined"))
+            {
                 this.tbLog.AppendText(entry + "\r\n");
-            this.tbLog.SelectionStart = this.tbLog.Text.Length;
-            this.tbLog.SelectionLength = 0;
+                this.tbLog.SelectionStart = this.tbLog.Text.Length;
+                this.tbLog.SelectionLength = 0;
+            }
+            // Rich
+            if (!entry.StartsWith("Undefined"))
+            {
+                this.rtbLog.AppendText(entry + "\r\n");
+                this.rtbLog.SelectionStart = this.rtbLog.Text.Length;
+                this.rtbLog.ScrollToCaret();
+                CustomizeEntryText(entry, length);
+            }
+        }
+
+        private void CustomizeEntryText(string entry, int length)
+        {
+            int start = this.rtbLog.Text.Length - length;
+            if (start > 0) start -= 1;
+            Regex regSender = new Regex(@"\[+.*\]+");
+            Regex regMessage = new Regex(@"-->--\s.*");
+            // ->
+            this.rtbLog.SelectionStart = start;
+            this.rtbLog.SelectionLength = 2;
+            this.rtbLog.SelectionColor = entryColor;
+            // [Station]
+            MatchCollection mc = regSender.Matches(entry);
+            foreach (Match item in mc)
+            {
+                int startIndex = item.Index + start;
+                int stopIndex = item.Length;
+                this.rtbLog.Select(startIndex, stopIndex);
+                this.rtbLog.SelectionColor = stationColor;
+                this.rtbLog.SelectionStart = start;
+            }
+            // [-->-- textMsg]
+            mc = regMessage.Matches(entry);
+            foreach (Match item in mc)
+            {
+                int startIndex = item.Index + start;// + 6; without -->--
+                int stopIndex = item.Length;
+                this.rtbLog.Select(startIndex, stopIndex);
+                this.rtbLog.SelectionColor = textMsgColor;
+                this.rtbLog.SelectionStart = start;
+            }
         }
 
         protected override void WndProc(ref Message m)
@@ -107,19 +157,57 @@ namespace RPElite
             this.pbSleep.Value = this.commander.GetSleep();
         }
 
-        private void ButtonEat_Click(object sender, EventArgs e)
+        private void CloseAllPanels()
         {
-            this.commander.AddFood(3);
+            this.panelShip.Visible = false;
+            this.panelKitchen.Visible = false;
+            this.panelStation.Visible = false;
+            this.panelMarket.Visible = false;
         }
 
-        private void ButtonDrink_Click(object sender, EventArgs e)
+        private void ButtonShip_Click(object sender, EventArgs e)
         {
-            this.commander.AddWater(5);
+            CloseAllPanels();
+            this.panelShip.Visible = true;
+        }
+
+        private void ButtonStation_Click(object sender, EventArgs e)
+        {
+            CloseAllPanels();
+            this.panelStation.Visible = true;
         }
 
         private void ButtonSleep_Click(object sender, EventArgs e)
         {
             this.commander.AddSleep();
+        }
+
+        private void rpButtonCockpit_Click(object sender, EventArgs e)
+        {
+            this.panelShip.Visible = false;
+        }
+
+        private void ButtonEat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rpButtonShip_Click(object sender, EventArgs e)
+        {
+            this.panelStation.Visible = false;
+        }
+
+        private void rpButtonMarket_Click(object sender, EventArgs e)
+        {
+            this.panelMarket.Visible = true;
+            this.dataGridViewMarket.Rows.Add(FoodFactory.CreateFood("Яблоко").ToStringArray());
+            this.dataGridViewMarket.Rows.Add(FoodFactory.CreateFood("Суп").ToStringArray());
+        }
+
+        private void rpButtonMarketExit_Click(object sender, EventArgs e)
+        {
+            CloseAllPanels();
+            this.panelStation.Visible = true;
         }
     }
 }

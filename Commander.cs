@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace RPElite
 {
     class Commander
@@ -13,6 +14,8 @@ namespace RPElite
         private const int FOOD_STEP = 3;
         private const int WATER_STEP = 5;
         private const int SLEEP_STEP = 1;
+
+        private Dictionary<Item, int> items = new Dictionary<Item, int>();
 
         private int food = MAX_FOOD;
         private int water = MAX_WATER;
@@ -47,6 +50,19 @@ namespace RPElite
         public void AddSleep()
         {
             this.sleep = MAX_SLEEP;
+        }
+
+        public void AddItemToInventory(Item item)
+        {
+            if (this.items.ContainsKey(item))
+            {
+                int count = this.items[item];
+                this.items.Add(item, count);
+            }
+            else
+            {
+                this.items.Add(item, 1);
+            }
         }
     }
 }
