@@ -62,7 +62,7 @@ namespace RPElite
             this.buttonSleep = new RPElite.RPButton();
             this.buttonStation = new RPElite.RPButton();
             this.buttonShip = new RPElite.RPButton();
-            this.pbSleep = new RPElite.RPProgressBar();
+            this.pbEnergy = new RPElite.RPProgressBar();
             this.pbWater = new RPElite.RPProgressBar();
             this.buttonExit = new RPElite.RPButton();
             this.pbFood = new RPElite.RPProgressBar();
@@ -83,7 +83,7 @@ namespace RPElite
             this.panel.Controls.Add(this.buttonSleep);
             this.panel.Controls.Add(this.buttonStation);
             this.panel.Controls.Add(this.buttonShip);
-            this.panel.Controls.Add(this.pbSleep);
+            this.panel.Controls.Add(this.pbEnergy);
             this.panel.Controls.Add(this.pbWater);
             this.panel.Controls.Add(this.buttonExit);
             this.panel.Controls.Add(this.pbFood);
@@ -417,22 +417,22 @@ namespace RPElite
             // 
             // pbSleep
             // 
-            this.pbSleep.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbSleep.BackColor = System.Drawing.Color.LightGray;
-            this.pbSleep.BorderColor = System.Drawing.Color.Black;
-            this.pbSleep.BorderWidth = 2;
-            this.pbSleep.ForeColor = System.Drawing.Color.Black;
-            this.pbSleep.Location = new System.Drawing.Point(286, 34);
-            this.pbSleep.MaxValue = 100;
-            this.pbSleep.MinValue = 0;
-            this.pbSleep.Name = "pbSleep";
-            this.pbSleep.ProgressColor = System.Drawing.Color.BlueViolet;
-            this.pbSleep.ProgressTextType = RPElite.RPProgressBar.RPProgressTextType.Percent;
-            this.pbSleep.ShowProgressText = true;
-            this.pbSleep.Size = new System.Drawing.Size(200, 10);
-            this.pbSleep.TabIndex = 3;
-            this.pbSleep.Text = "Sleep";
-            this.pbSleep.Value = 86;
+            this.pbEnergy.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbEnergy.BackColor = System.Drawing.Color.LightGray;
+            this.pbEnergy.BorderColor = System.Drawing.Color.Black;
+            this.pbEnergy.BorderWidth = 2;
+            this.pbEnergy.ForeColor = System.Drawing.Color.Black;
+            this.pbEnergy.Location = new System.Drawing.Point(286, 34);
+            this.pbEnergy.MaxValue = 100;
+            this.pbEnergy.MinValue = 0;
+            this.pbEnergy.Name = "pbSleep";
+            this.pbEnergy.ProgressColor = System.Drawing.Color.BlueViolet;
+            this.pbEnergy.ProgressTextType = RPElite.RPProgressBar.RPProgressTextType.Percent;
+            this.pbEnergy.ShowProgressText = true;
+            this.pbEnergy.Size = new System.Drawing.Size(200, 10);
+            this.pbEnergy.TabIndex = 3;
+            this.pbEnergy.Text = "Sleep";
+            this.pbEnergy.Value = 86;
             // 
             // pbWater
             // 
@@ -516,7 +516,7 @@ namespace RPElite
         private System.Windows.Forms.Timer timerOneMinute;
         private RPProgressBar pbFood;
         private RPProgressBar pbWater;
-        private RPProgressBar pbSleep;
+        private RPProgressBar pbEnergy;
         private RPButton buttonShip;
         private RPButton buttonStation;
         private RPButton buttonSleep;

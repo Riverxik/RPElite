@@ -148,7 +148,7 @@ namespace RPElite
         {
             this.pbFood.Value = PluginEngine.commander.GetFood();
             this.pbWater.Value = PluginEngine.commander.GetWater();
-            this.pbSleep.Value = PluginEngine.commander.GetSleep();
+            this.pbEnergy.Value = PluginEngine.commander.GetEnergy();
             this.labelCredits.Text = string.Format("Ваши средства: {0} кр.", PluginEngine.commander.GetMoney());
         }
 

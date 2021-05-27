@@ -17,9 +17,9 @@ namespace RPElite
 
         private void InitializeMarket()
         {
+            Random random = new Random();
             foreach (Food food in FoodFactory.GetAllFood())
             {
-                Random random = new Random();
                 int rand = random.Next(1, 50);
                 inventory.Add(food, rand);
             }

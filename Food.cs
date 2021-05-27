@@ -9,18 +9,18 @@ namespace RPElite
     {
         private readonly int foodValue;
         private readonly int waterValue;
-        private readonly int sleepValue;
+        private readonly int energyValue;
 
         public Food(string name, string desc, int price, int foodValue, int waterValue, int sleepValue) : base(name, desc, price)
         {
             this.foodValue = foodValue;
             this.waterValue = waterValue;
-            this.sleepValue = sleepValue;
+            this.energyValue = sleepValue;
         }
 
         public int GetFoodValue() { return this.foodValue; }
         public int GetWaterValue() { return this.waterValue; }
-        public int GetSleepValue() { return this.sleepValue; }
+        public int GetSleepValue() { return this.energyValue; }
 
     }
 }
