@@ -36,6 +36,11 @@ namespace RPElite
                 case "Undocked": return DoUndocked(obj);
                 // Chat.
                 case "ReceiveText": return DoReceiveText(obj);
+                // Station services.
+                case "RefuelPartial":
+                case "RefuelAll": return DoRefuelAll(obj);
+                case "RepairAll": return DoRepairAll(obj);
+                case "RestockVehicle": return DoRestockVehicle(obj);
                 default: return "Undefined: " + rawEntry;
             }
         }
@@ -380,6 +385,26 @@ namespace RPElite
             if (from.Length == 0) res = string.Format("-> {0}", message);
             else res = string.Format("-> [{0}] -->-- {1}", from, message);
             return res;
+        }
+
+        private static string DoRefuelAll(JObject obj)
+        {
+            int cost = obj.Value<int>("Cost");
+            double amount = obj.Value<double>("Amount");
+            return string.Format("-> Корабль заправлен на {0:0.00}, стоимость: {1} кр.", amount, cost);
+        }
+
+        private static string DoRepairAll(JObject obj)
+        {
+            return string.Format("-> Ремонт корабля произведён, стоимость: {0} кр.", obj.Value<int>("Cost"));
+        }
+
+        private static string DoRestockVehicle(JObject obj)
+        {
+            string type = obj.Value<string>("Type");
+            int cost = obj.Value<int>("Cost");
+            int count = obj.Value<int>("Count");
+            return string.Format("Покупка: {0} - {1} шт. {2} кр.", type, count, cost);
         }
     }
 }
