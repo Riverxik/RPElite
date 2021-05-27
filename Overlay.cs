@@ -234,7 +234,6 @@ namespace RPElite
         private void DataGridViewMarket_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewMarket_CellContentClick(sender, e);
-            DataGridViewMarket_CellContentClick(sender, e);
         }
     }
 }

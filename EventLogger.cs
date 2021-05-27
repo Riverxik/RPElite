@@ -66,7 +66,7 @@ namespace RPElite
                 string name = item.Value<string>("Name");
                 string localized = item.Value<string>("Name_Localised");
                 int count = item.Value<int>("Count");
-                if (localized.Length > 0) name = localized;
+                if (localized != null) name = localized;
                 res += string.Format("\r\n>> Предмет: {0}, количество: {1} <<", name, count);
             }
             return res;
@@ -231,7 +231,7 @@ namespace RPElite
             {
                 // On the ground.
                 string localized = obj.Value<string>("Ship_Localised");
-                if (localized.Length > 0) ship = localized;
+                if (localized != null) ship = localized;
                 res += string.Format("\r\n>> Костюм: {0}", ship);
             }
             res += string.Format("\r\n>> Кредиты: {0}", credits);
@@ -380,7 +380,7 @@ namespace RPElite
             string from = obj.Value<string>("From");
             string message = obj.Value<string>("Message");
             string localized = obj.Value<string>("Message_Localised");
-            if (localized.Length > 0) message = localized;
+            if (localized != null) message = localized;
             string res;
             if (from.Length == 0) res = string.Format("-> {0}", message);
             else res = string.Format("-> [{0}] -->-- {1}", from, message);

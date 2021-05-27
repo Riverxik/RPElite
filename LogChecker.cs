@@ -17,8 +17,8 @@ namespace RPElite
 
         public LogChecker()
         {
-            string filename;
-            if (Program.isDebug) filename = "test.log"; else filename = GetCorrectFilename();
+            string filename = GetCorrectFilename();
+            if (filename == null || Program.isDebug) filename = "test.log";
             Console.WriteLine(filename);
             fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             sr = new StreamReader(fs, System.Text.Encoding.UTF8);
@@ -36,7 +36,7 @@ namespace RPElite
             string userprofile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string fullPath = userprofile + _elitePath;
             string[] files = Directory.GetFiles(fullPath).Where(f => searchPattern.IsMatch(f)).ToArray();
-            if (files.Length == 0) throw new InvalidOperationException("Can't read logfile");
+            if (files.Length == 0) return "test.log";
             return files[0];
         }
 
