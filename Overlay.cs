@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace RPElite
 {
@@ -16,8 +17,7 @@ namespace RPElite
         private readonly Color textMsgColor = Color.BlueViolet;//Color.FromArgb(52, 37, 76);
         private readonly Color entryColor = Color.MediumVioletRed;
 
-        private readonly LogChecker _log;
-        private int count;
+        private int timerCount;
 
         enum KeyModifier
         {
@@ -27,8 +27,6 @@ namespace RPElite
             Shift = 4,
             WinKey = 8
         }
-
-        private readonly Commander commander;
 
         public Overlay()
         {
@@ -52,12 +50,10 @@ namespace RPElite
             // Textbox Log
             this.tbLog.BackColor = Color.FromArgb(255, 133, 0);
             this.rtbLog.BackColor = Color.FromArgb(255, 133, 0);
-            _log = new LogChecker();
-            _log.newEntryHandler += LogNewEntryHandler;
 
             // Game mechanics.
-            this.commander = new Commander();
-            FoodFactory.Init();
+            PluginEngine.Init();
+            PluginEngine.log.newEntryHandler += LogNewEntryHandler;
             UpdateGUI();
             
             // Timer for one minute (5 sec test).
@@ -127,8 +123,8 @@ namespace RPElite
 
         private void ButtonExit_Click(object sender, EventArgs e)
         {
-            this._log.sr.Close();
-            this._log.fs.Close();
+            PluginEngine.log.sr.Close();
+            PluginEngine.log.fs.Close();
             this.Close();
         }
 
@@ -139,20 +135,21 @@ namespace RPElite
 
         private void TimerOneSecond_Tick(object sender, EventArgs e)
         {
-            if (count % 5 == 0) // Every 5 seconds.
+            if (timerCount % 5 == 0) // Every 5 seconds.
             {
-                this.commander.DecreaseStats();
-                this._log.ReadLog();
+                PluginEngine.commander.DecreaseStats();
+                PluginEngine.log.ReadLog();
             }
             UpdateGUI();
-            if (count > 255) { count = 0; } else { count++; }
+            if (timerCount > 255) { timerCount = 0; } else { timerCount++; }
         }
 
         private void UpdateGUI()
         {
-            this.pbFood.Value = this.commander.GetFood();
-            this.pbWater.Value = this.commander.GetWater();
-            this.pbSleep.Value = this.commander.GetSleep();
+            this.pbFood.Value = PluginEngine.commander.GetFood();
+            this.pbWater.Value = PluginEngine.commander.GetWater();
+            this.pbSleep.Value = PluginEngine.commander.GetSleep();
+            this.labelCredits.Text = string.Format("Ваши средства: {0} кр.", PluginEngine.commander.GetMoney());
         }
 
         private void CloseAllPanels()
@@ -175,37 +172,69 @@ namespace RPElite
             this.panelStation.Visible = true;
         }
 
-        private void ButtonSleep_Click(object sender, EventArgs e)
-        {
-            this.commander.AddSleep();
-        }
-
-        private void rpButtonCockpit_Click(object sender, EventArgs e)
+        private void RPButtonCockpit_Click(object sender, EventArgs e)
         {
             this.panelShip.Visible = false;
         }
 
-        private void ButtonEat_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rpButtonShip_Click(object sender, EventArgs e)
+        private void RPButtonShip_Click(object sender, EventArgs e)
         {
             this.panelStation.Visible = false;
         }
 
-        private void rpButtonMarket_Click(object sender, EventArgs e)
+        private void RPButtonMarket_Click(object sender, EventArgs e)
         {
             this.panelMarket.Visible = true;
-            this.dataGridViewMarket.Rows.Add(FoodFactory.CreateFood("Яблоко").ToStringArray());
-            this.dataGridViewMarket.Rows.Add(FoodFactory.CreateFood("Суп").ToStringArray());
+            string[][] marketElems = PluginEngine.market.GetInventory().GetInventoryItemsInfoByClass("Food");
+            foreach(string[] s in marketElems)
+            {
+                this.dataGridViewMarket.Rows.Add(s);
+            }
         }
 
-        private void rpButtonMarketExit_Click(object sender, EventArgs e)
+        private void RPButtonMarketExit_Click(object sender, EventArgs e)
         {
             CloseAllPanels();
             this.panelStation.Visible = true;
+            this.dataGridViewMarket.Rows.Clear();
+            this.dataGridViewMarket.Refresh();
+        }
+
+        private void DataGridViewMarket_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridViewMarket.Columns["ColumnLess"].Index && e.RowIndex >= 0)
+            {
+                // Item name.
+                string itemName = dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnName"].Value.ToString();
+                // Sell to the market. (Market buys items)
+                if (PluginEngine.market.SellItemsToMarket(itemName))
+                {
+                    int oldInvValue = Int32.Parse(dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnCount"].Value.ToString());
+                    dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnCount"].Value = --oldInvValue;
+                    int oldStationValue = Int32.Parse(dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnStationCount"].Value.ToString());
+                    dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnStationCount"].Value = ++oldStationValue;
+                }
+            }
+            if (e.ColumnIndex == dataGridViewMarket.Columns["ColumnMore"].Index && e.RowIndex >= 0)
+            {
+                // Name
+                string itemName = dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnName"].Value.ToString();
+                // Buy from market. (Market sells items)
+                if (PluginEngine.market.BuyItemsFromMaket(itemName))
+                {
+                    int oldInvValue = Int32.Parse(dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnCount"].Value.ToString());
+                    dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnCount"].Value = ++oldInvValue;
+                    int oldStationValue = Int32.Parse(dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnStationCount"].Value.ToString());
+                    dataGridViewMarket.Rows[e.RowIndex].Cells["ColumnStationCount"].Value = --oldStationValue;
+                }
+            }
+            UpdateGUI();
+        }
+
+        private void DataGridViewMarket_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewMarket_CellContentClick(sender, e);
+            DataGridViewMarket_CellContentClick(sender, e);
         }
     }
 }

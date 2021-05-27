@@ -19,5 +19,7 @@ namespace RPElite
         {
             return foodList.Find(item => item.GetName().Equals(name));
         }
+
+        public static List<Food> GetAllFood() { return foodList; }
     }
 }

@@ -7,9 +7,9 @@ namespace RPElite
 {
     class Food : Item
     {
-        private int foodValue;
-        private int waterValue;
-        private int sleepValue;
+        private readonly int foodValue;
+        private readonly int waterValue;
+        private readonly int sleepValue;
 
         public Food(string name, string desc, int price, int foodValue, int waterValue, int sleepValue) : base(name, desc, price)
         {
@@ -22,9 +22,5 @@ namespace RPElite
         public int GetWaterValue() { return this.waterValue; }
         public int GetSleepValue() { return this.sleepValue; }
 
-        public string[] ToStringArray()
-        {
-            return new string[] { this.name, this.desc, this.price.ToString()};
-        }
     }
 }

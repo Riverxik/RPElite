@@ -30,26 +30,35 @@ namespace RPElite
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel = new System.Windows.Forms.Panel();
             this.panelStation = new System.Windows.Forms.Panel();
             this.panelMarket = new System.Windows.Forms.Panel();
-            this.rpButtonMarketExit = new RPElite.RPButton();
+            this.labelCredits = new System.Windows.Forms.Label();
             this.dataGridViewMarket = new System.Windows.Forms.DataGridView();
             this.labelMarket = new System.Windows.Forms.Label();
+            this.panelShip = new System.Windows.Forms.Panel();
+            this.panelKitchen = new System.Windows.Forms.Panel();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
+            this.tbLog = new System.Windows.Forms.TextBox();
+            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStationCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLess = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnMore = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.rpButtonMarketExit = new RPElite.RPButton();
             this.rpButtonHotel = new RPElite.RPButton();
             this.rpButtonShip = new RPElite.RPButton();
             this.rpButtonMarket = new RPElite.RPButton();
-            this.panelShip = new System.Windows.Forms.Panel();
-            this.panelKitchen = new System.Windows.Forms.Panel();
             this.rpButtonLiving = new RPElite.RPButton();
             this.rpButtonKitchen = new RPElite.RPButton();
             this.rpButtonCockpit = new RPElite.RPButton();
-            this.rtbLog = new System.Windows.Forms.RichTextBox();
-            this.tbLog = new System.Windows.Forms.TextBox();
             this.buttonSleep = new RPElite.RPButton();
             this.buttonStation = new RPElite.RPButton();
             this.buttonShip = new RPElite.RPButton();
@@ -57,12 +66,6 @@ namespace RPElite
             this.pbWater = new RPElite.RPProgressBar();
             this.buttonExit = new RPElite.RPButton();
             this.pbFood = new RPElite.RPProgressBar();
-            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBuy = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel.SuspendLayout();
             this.panelStation.SuspendLayout();
             this.panelMarket.SuspendLayout();
@@ -103,6 +106,7 @@ namespace RPElite
             // 
             // panelMarket
             // 
+            this.panelMarket.Controls.Add(this.labelCredits);
             this.panelMarket.Controls.Add(this.rpButtonMarketExit);
             this.panelMarket.Controls.Add(this.dataGridViewMarket);
             this.panelMarket.Controls.Add(this.labelMarket);
@@ -112,16 +116,16 @@ namespace RPElite
             this.panelMarket.TabIndex = 14;
             this.panelMarket.Visible = false;
             // 
-            // rpButtonMarketExit
+            // labelCredits
             // 
-            this.rpButtonMarketExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rpButtonMarketExit.Location = new System.Drawing.Point(289, 186);
-            this.rpButtonMarketExit.Name = "rpButtonMarketExit";
-            this.rpButtonMarketExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rpButtonMarketExit.Size = new System.Drawing.Size(63, 23);
-            this.rpButtonMarketExit.TabIndex = 7;
-            this.rpButtonMarketExit.Text = "Back";
-            this.rpButtonMarketExit.Click += new System.EventHandler(this.rpButtonMarketExit_Click);
+            this.labelCredits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.labelCredits.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelCredits.Location = new System.Drawing.Point(37, 174);
+            this.labelCredits.Name = "labelCredits";
+            this.labelCredits.Size = new System.Drawing.Size(585, 23);
+            this.labelCredits.TabIndex = 9;
+            this.labelCredits.Text = "Ваши средства:";
+            this.labelCredits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dataGridViewMarket
             // 
@@ -130,98 +134,70 @@ namespace RPElite
             this.dataGridViewMarket.AllowUserToResizeColumns = false;
             this.dataGridViewMarket.AllowUserToResizeRows = false;
             this.dataGridViewMarket.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewMarket.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dataGridViewMarket.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            this.dataGridViewMarket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewMarket.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridViewMarket.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMarket.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewMarket.ColumnHeadersHeight = 30;
             this.dataGridViewMarket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridViewMarket.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnDesc,
             this.ColumnPrice,
+            this.ColumnStationCount,
+            this.ColumnLess,
             this.ColumnCount,
-            this.ColumnBuy});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewMarket.DefaultCellStyle = dataGridViewCellStyle10;
+            this.ColumnMore});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewMarket.EnableHeadersVisualStyles = false;
             this.dataGridViewMarket.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            this.dataGridViewMarket.Location = new System.Drawing.Point(0, 26);
+            this.dataGridViewMarket.Location = new System.Drawing.Point(37, 24);
             this.dataGridViewMarket.Name = "dataGridViewMarket";
             this.dataGridViewMarket.ReadOnly = true;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMarket.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewMarket.RowHeadersVisible = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.dataGridViewMarket.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.dataGridViewMarket.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewMarket.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewMarket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewMarket.Size = new System.Drawing.Size(500, 150);
+            this.dataGridViewMarket.Size = new System.Drawing.Size(585, 150);
             this.dataGridViewMarket.TabIndex = 2;
+            this.dataGridViewMarket.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewMarket_CellContentClick);
+            this.dataGridViewMarket.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewMarket_CellDoubleClick);
             // 
             // labelMarket
             // 
             this.labelMarket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
             this.labelMarket.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMarket.Location = new System.Drawing.Point(1, 3);
+            this.labelMarket.Location = new System.Drawing.Point(37, 1);
             this.labelMarket.Name = "labelMarket";
-            this.labelMarket.Size = new System.Drawing.Size(499, 23);
+            this.labelMarket.Size = new System.Drawing.Size(585, 23);
             this.labelMarket.TabIndex = 1;
             this.labelMarket.Text = "Магазин";
             this.labelMarket.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // rpButtonHotel
-            // 
-            this.rpButtonHotel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rpButtonHotel.Location = new System.Drawing.Point(358, 58);
-            this.rpButtonHotel.Name = "rpButtonHotel";
-            this.rpButtonHotel.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rpButtonHotel.Size = new System.Drawing.Size(63, 23);
-            this.rpButtonHotel.TabIndex = 13;
-            this.rpButtonHotel.Text = "Hotel";
-            // 
-            // rpButtonShip
-            // 
-            this.rpButtonShip.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rpButtonShip.Location = new System.Drawing.Point(289, 24);
-            this.rpButtonShip.Name = "rpButtonShip";
-            this.rpButtonShip.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rpButtonShip.Size = new System.Drawing.Size(63, 23);
-            this.rpButtonShip.TabIndex = 12;
-            this.rpButtonShip.Text = "Ship";
-            this.rpButtonShip.Click += new System.EventHandler(this.rpButtonShip_Click);
-            // 
-            // rpButtonMarket
-            // 
-            this.rpButtonMarket.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rpButtonMarket.Location = new System.Drawing.Point(220, 58);
-            this.rpButtonMarket.Name = "rpButtonMarket";
-            this.rpButtonMarket.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rpButtonMarket.Size = new System.Drawing.Size(63, 23);
-            this.rpButtonMarket.TabIndex = 7;
-            this.rpButtonMarket.Text = "Market";
-            this.rpButtonMarket.Click += new System.EventHandler(this.rpButtonMarket_Click);
             // 
             // panelShip
             // 
@@ -242,6 +218,137 @@ namespace RPElite
             this.panelKitchen.Size = new System.Drawing.Size(400, 209);
             this.panelKitchen.TabIndex = 9;
             this.panelKitchen.Visible = false;
+            // 
+            // rtbLog
+            // 
+            this.rtbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtbLog.Location = new System.Drawing.Point(187, 294);
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.ReadOnly = true;
+            this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbLog.Size = new System.Drawing.Size(400, 180);
+            this.rtbLog.TabIndex = 9;
+            this.rtbLog.Text = "";
+            // 
+            // tbLog
+            // 
+            this.tbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.tbLog.Location = new System.Drawing.Point(187, 79);
+            this.tbLog.Multiline = true;
+            this.tbLog.Name = "tbLog";
+            this.tbLog.ReadOnly = true;
+            this.tbLog.Size = new System.Drawing.Size(400, 180);
+            this.tbLog.TabIndex = 8;
+            // 
+            // timerOneMinute
+            // 
+            this.timerOneMinute.Interval = 1000;
+            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Название";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // ColumnDesc
+            // 
+            this.ColumnDesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnDesc.HeaderText = "Описание";
+            this.ColumnDesc.Name = "ColumnDesc";
+            this.ColumnDesc.ReadOnly = true;
+            this.ColumnDesc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnDesc.Width = 150;
+            // 
+            // ColumnPrice
+            // 
+            this.ColumnPrice.HeaderText = "Цена";
+            this.ColumnPrice.Name = "ColumnPrice";
+            this.ColumnPrice.ReadOnly = true;
+            this.ColumnPrice.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // ColumnStationCount
+            // 
+            this.ColumnStationCount.HeaderText = "Станция";
+            this.ColumnStationCount.Name = "ColumnStationCount";
+            this.ColumnStationCount.ReadOnly = true;
+            this.ColumnStationCount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // ColumnLess
+            // 
+            this.ColumnLess.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnLess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ColumnLess.HeaderText = "<";
+            this.ColumnLess.Name = "ColumnLess";
+            this.ColumnLess.ReadOnly = true;
+            this.ColumnLess.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnLess.Text = "<";
+            this.ColumnLess.Width = 30;
+            // 
+            // ColumnCount
+            // 
+            this.ColumnCount.HeaderText = "Инвентарь";
+            this.ColumnCount.Name = "ColumnCount";
+            this.ColumnCount.ReadOnly = true;
+            this.ColumnCount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // ColumnMore
+            // 
+            this.ColumnMore.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnMore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ColumnMore.HeaderText = ">";
+            this.ColumnMore.Name = "ColumnMore";
+            this.ColumnMore.ReadOnly = true;
+            this.ColumnMore.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnMore.Text = ">";
+            this.ColumnMore.UseColumnTextForButtonValue = true;
+            this.ColumnMore.Width = 30;
+            // 
+            // rpButtonMarketExit
+            // 
+            this.rpButtonMarketExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonMarketExit.Location = new System.Drawing.Point(289, 200);
+            this.rpButtonMarketExit.Name = "rpButtonMarketExit";
+            this.rpButtonMarketExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rpButtonMarketExit.Size = new System.Drawing.Size(63, 23);
+            this.rpButtonMarketExit.TabIndex = 7;
+            this.rpButtonMarketExit.Text = "Назад";
+            this.rpButtonMarketExit.Click += new System.EventHandler(this.RPButtonMarketExit_Click);
+            // 
+            // rpButtonHotel
+            // 
+            this.rpButtonHotel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonHotel.Location = new System.Drawing.Point(358, 58);
+            this.rpButtonHotel.Name = "rpButtonHotel";
+            this.rpButtonHotel.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rpButtonHotel.Size = new System.Drawing.Size(63, 23);
+            this.rpButtonHotel.TabIndex = 13;
+            this.rpButtonHotel.Text = "Hotel";
+            // 
+            // rpButtonShip
+            // 
+            this.rpButtonShip.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonShip.Location = new System.Drawing.Point(289, 24);
+            this.rpButtonShip.Name = "rpButtonShip";
+            this.rpButtonShip.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rpButtonShip.Size = new System.Drawing.Size(63, 23);
+            this.rpButtonShip.TabIndex = 12;
+            this.rpButtonShip.Text = "Ship";
+            this.rpButtonShip.Click += new System.EventHandler(this.RPButtonShip_Click);
+            // 
+            // rpButtonMarket
+            // 
+            this.rpButtonMarket.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonMarket.Location = new System.Drawing.Point(220, 58);
+            this.rpButtonMarket.Name = "rpButtonMarket";
+            this.rpButtonMarket.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rpButtonMarket.Size = new System.Drawing.Size(63, 23);
+            this.rpButtonMarket.TabIndex = 7;
+            this.rpButtonMarket.Text = "Market";
+            this.rpButtonMarket.Click += new System.EventHandler(this.RPButtonMarket_Click);
             // 
             // rpButtonLiving
             // 
@@ -272,41 +379,17 @@ namespace RPElite
             this.rpButtonCockpit.Size = new System.Drawing.Size(63, 23);
             this.rpButtonCockpit.TabIndex = 6;
             this.rpButtonCockpit.Text = "Cockpit";
-            this.rpButtonCockpit.Click += new System.EventHandler(this.rpButtonCockpit_Click);
+            this.rpButtonCockpit.Click += new System.EventHandler(this.RPButtonCockpit_Click);
             // 
-            // rtbLog
-            // 
-            this.rtbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbLog.Location = new System.Drawing.Point(187, 294);
-            this.rtbLog.Name = "rtbLog";
-            this.rtbLog.ReadOnly = true;
-            this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbLog.Size = new System.Drawing.Size(400, 180);
-            this.rtbLog.TabIndex = 9;
-            this.rtbLog.Text = "";
-            // 
-            // tbLog
-            // 
-            this.tbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tbLog.Location = new System.Drawing.Point(187, 79);
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.ReadOnly = true;
-            this.tbLog.Size = new System.Drawing.Size(400, 180);
-            this.tbLog.TabIndex = 8;
-            // 
-            // buttonSleep
+            // buttonReserved
             // 
             this.buttonSleep.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.buttonSleep.Location = new System.Drawing.Point(423, 50);
-            this.buttonSleep.Name = "buttonSleep";
+            this.buttonSleep.Name = "buttonReserved";
             this.buttonSleep.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
             this.buttonSleep.Size = new System.Drawing.Size(63, 23);
             this.buttonSleep.TabIndex = 6;
             this.buttonSleep.Text = "Reserved";
-            this.buttonSleep.Click += new System.EventHandler(this.ButtonSleep_Click);
             // 
             // buttonStation
             // 
@@ -400,58 +483,6 @@ namespace RPElite
             this.pbFood.Text = "Food";
             this.pbFood.Value = 86;
             // 
-            // timerOneMinute
-            // 
-            this.timerOneMinute.Interval = 1000;
-            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnName.Frozen = true;
-            this.ColumnName.HeaderText = "Название";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // ColumnDesc
-            // 
-            this.ColumnDesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnDesc.Frozen = true;
-            this.ColumnDesc.HeaderText = "Описание";
-            this.ColumnDesc.Name = "ColumnDesc";
-            this.ColumnDesc.ReadOnly = true;
-            this.ColumnDesc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // ColumnPrice
-            // 
-            this.ColumnPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnPrice.Frozen = true;
-            this.ColumnPrice.HeaderText = "Цена";
-            this.ColumnPrice.Name = "ColumnPrice";
-            this.ColumnPrice.ReadOnly = true;
-            this.ColumnPrice.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // ColumnCount
-            // 
-            this.ColumnCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnCount.Frozen = true;
-            this.ColumnCount.HeaderText = "Количество";
-            this.ColumnCount.Name = "ColumnCount";
-            this.ColumnCount.ReadOnly = true;
-            this.ColumnCount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // ColumnBuy
-            // 
-            this.ColumnBuy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnBuy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ColumnBuy.HeaderText = "1 шт.";
-            this.ColumnBuy.Name = "ColumnBuy";
-            this.ColumnBuy.ReadOnly = true;
-            this.ColumnBuy.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnBuy.Text = "Купить";
-            this.ColumnBuy.UseColumnTextForButtonValue = true;
-            // 
             // Overlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -504,11 +535,14 @@ namespace RPElite
         private System.Windows.Forms.Label labelMarket;
         private System.Windows.Forms.DataGridView dataGridViewMarket;
         private RPButton rpButtonMarketExit;
+        private System.Windows.Forms.Label labelCredits;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStationCount;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnLess;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCount;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnBuy;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnMore;
     }
 }
 

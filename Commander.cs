@@ -15,15 +15,26 @@ namespace RPElite
         private const int WATER_STEP = 5;
         private const int SLEEP_STEP = 1;
 
-        private Dictionary<Item, int> items = new Dictionary<Item, int>();
+        private readonly Inventory inventory;
 
         private int food = MAX_FOOD;
         private int water = MAX_WATER;
         private int sleep = MAX_SLEEP;
+        private int money = 100;
 
         public Commander()
         {
             // For future use.
+            inventory = new Inventory();
+            InitializeInventory();
+        }
+
+        private void InitializeInventory()
+        {
+            foreach (Food food in FoodFactory.GetAllFood())
+            {
+                inventory.Add(food, 0);
+            }
         }
 
         public void DecreaseStats()
@@ -36,6 +47,8 @@ namespace RPElite
         public int GetFood() { return this.food; }
         public int GetWater() { return this.water; }
         public int GetSleep() { return this.sleep; }
+        public int GetMoney() { return this.money; }
+        public Inventory GetInventory() { return this.inventory; }
 
         public void AddFood(int amount)
         {
@@ -52,17 +65,19 @@ namespace RPElite
             this.sleep = MAX_SLEEP;
         }
 
-        public void AddItemToInventory(Item item)
+        public bool AddMoney(int amount)
         {
-            if (this.items.ContainsKey(item))
+            if (money + amount >= 0)
             {
-                int count = this.items[item];
-                this.items.Add(item, count);
+                this.money += amount;
+                return true;
             }
-            else
-            {
-                this.items.Add(item, 1);
-            }
+            return false;
+        }
+
+        public bool CanBuyItemWithPrice(int price)
+        {
+            return this.money - price >= 0;
         }
     }
 }

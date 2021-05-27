@@ -21,5 +21,10 @@ namespace RPElite
         public string GetName() { return this.name; }
         public string GetDesc() { return this.desc; }
         public int GetPrice() { return this.price; }
+
+        public string[] ToStringArray()
+        {
+            return new string[] { this.name, this.desc, this.price.ToString() };
+        }
     }
 }
