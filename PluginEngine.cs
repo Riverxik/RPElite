@@ -13,6 +13,7 @@ namespace RPElite
 
         public static void Init()
         {
+            Database.Init();
             FoodFactory.Init();
             market = new Market();
             commander = new Commander();
