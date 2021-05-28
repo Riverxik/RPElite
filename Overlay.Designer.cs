@@ -30,21 +30,16 @@ namespace RPElite
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel = new System.Windows.Forms.Panel();
             this.panelStation = new System.Windows.Forms.Panel();
             this.panelMarket = new System.Windows.Forms.Panel();
             this.labelCredits = new System.Windows.Forms.Label();
+            this.rpButtonMarketExit = new RPElite.RPButton();
             this.dataGridViewMarket = new System.Windows.Forms.DataGridView();
-            this.labelMarket = new System.Windows.Forms.Label();
-            this.panelShip = new System.Windows.Forms.Panel();
-            this.panelKitchen = new System.Windows.Forms.Panel();
-            this.rtbLog = new System.Windows.Forms.RichTextBox();
-            this.tbLog = new System.Windows.Forms.TextBox();
-            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,20 +47,25 @@ namespace RPElite
             this.ColumnLess = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnMore = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.rpButtonMarketExit = new RPElite.RPButton();
+            this.labelMarket = new System.Windows.Forms.Label();
             this.rpButtonHotel = new RPElite.RPButton();
             this.rpButtonShip = new RPElite.RPButton();
             this.rpButtonMarket = new RPElite.RPButton();
+            this.panelShip = new System.Windows.Forms.Panel();
+            this.panelKitchen = new System.Windows.Forms.Panel();
             this.rpButtonLiving = new RPElite.RPButton();
             this.rpButtonKitchen = new RPElite.RPButton();
             this.rpButtonCockpit = new RPElite.RPButton();
-            this.buttonSleep = new RPElite.RPButton();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
+            this.tbLog = new System.Windows.Forms.TextBox();
+            this.buttonReserved = new RPElite.RPButton();
             this.buttonStation = new RPElite.RPButton();
             this.buttonShip = new RPElite.RPButton();
             this.pbEnergy = new RPElite.RPProgressBar();
             this.pbWater = new RPElite.RPProgressBar();
-            this.buttonExit = new RPElite.RPButton();
             this.pbFood = new RPElite.RPProgressBar();
+            this.buttonExit = new RPElite.RPButton();
+            this.timerOneMinute = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             this.panelStation.SuspendLayout();
             this.panelMarket.SuspendLayout();
@@ -80,13 +80,13 @@ namespace RPElite
             this.panel.Controls.Add(this.panelShip);
             this.panel.Controls.Add(this.rtbLog);
             this.panel.Controls.Add(this.tbLog);
-            this.panel.Controls.Add(this.buttonSleep);
             this.panel.Controls.Add(this.buttonStation);
             this.panel.Controls.Add(this.buttonShip);
+            this.panel.Controls.Add(this.buttonReserved);
             this.panel.Controls.Add(this.pbEnergy);
             this.panel.Controls.Add(this.pbWater);
-            this.panel.Controls.Add(this.buttonExit);
             this.panel.Controls.Add(this.pbFood);
+            this.panel.Controls.Add(this.buttonExit);
             this.panel.Location = new System.Drawing.Point(12, 12);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(760, 485);
@@ -127,6 +127,18 @@ namespace RPElite
             this.labelCredits.Text = "Ваши средства:";
             this.labelCredits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // rpButtonMarketExit
+            // 
+            this.rpButtonMarketExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonMarketExit.DrawBorder = true;
+            this.rpButtonMarketExit.Location = new System.Drawing.Point(289, 200);
+            this.rpButtonMarketExit.Name = "rpButtonMarketExit";
+            this.rpButtonMarketExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rpButtonMarketExit.Size = new System.Drawing.Size(63, 23);
+            this.rpButtonMarketExit.TabIndex = 7;
+            this.rpButtonMarketExit.Text = "Назад";
+            this.rpButtonMarketExit.Click += new System.EventHandler(this.RPButtonMarketExit_Click);
+            // 
             // dataGridViewMarket
             // 
             this.dataGridViewMarket.AllowUserToAddRows = false;
@@ -138,14 +150,14 @@ namespace RPElite
             this.dataGridViewMarket.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
             this.dataGridViewMarket.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridViewMarket.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMarket.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle41.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle41.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle41.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle41;
             this.dataGridViewMarket.ColumnHeadersHeight = 30;
             this.dataGridViewMarket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridViewMarket.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -156,96 +168,37 @@ namespace RPElite
             this.ColumnLess,
             this.ColumnCount,
             this.ColumnMore});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMarket.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle42.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle42.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle42.SelectionForeColor = System.Drawing.SystemColors.Desktop;
+            dataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.DefaultCellStyle = dataGridViewCellStyle42;
             this.dataGridViewMarket.EnableHeadersVisualStyles = false;
             this.dataGridViewMarket.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
             this.dataGridViewMarket.Location = new System.Drawing.Point(37, 24);
             this.dataGridViewMarket.Name = "dataGridViewMarket";
             this.dataGridViewMarket.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewMarket.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle43.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle43.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle43.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewMarket.RowHeadersDefaultCellStyle = dataGridViewCellStyle43;
             this.dataGridViewMarket.RowHeadersVisible = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.dataGridViewMarket.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle44.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(133)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle44.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.dataGridViewMarket.RowsDefaultCellStyle = dataGridViewCellStyle44;
             this.dataGridViewMarket.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewMarket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewMarket.Size = new System.Drawing.Size(585, 150);
             this.dataGridViewMarket.TabIndex = 2;
             this.dataGridViewMarket.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewMarket_CellContentClick);
             this.dataGridViewMarket.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewMarket_CellDoubleClick);
-            // 
-            // labelMarket
-            // 
-            this.labelMarket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.labelMarket.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMarket.Location = new System.Drawing.Point(37, 1);
-            this.labelMarket.Name = "labelMarket";
-            this.labelMarket.Size = new System.Drawing.Size(585, 23);
-            this.labelMarket.TabIndex = 1;
-            this.labelMarket.Text = "Магазин";
-            this.labelMarket.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // panelShip
-            // 
-            this.panelShip.Controls.Add(this.panelKitchen);
-            this.panelShip.Controls.Add(this.rpButtonLiving);
-            this.panelShip.Controls.Add(this.rpButtonKitchen);
-            this.panelShip.Controls.Add(this.rpButtonCockpit);
-            this.panelShip.Location = new System.Drawing.Point(65, 50);
-            this.panelShip.Name = "panelShip";
-            this.panelShip.Size = new System.Drawing.Size(644, 425);
-            this.panelShip.TabIndex = 10;
-            this.panelShip.Visible = false;
-            // 
-            // panelKitchen
-            // 
-            this.panelKitchen.Location = new System.Drawing.Point(122, 123);
-            this.panelKitchen.Name = "panelKitchen";
-            this.panelKitchen.Size = new System.Drawing.Size(400, 209);
-            this.panelKitchen.TabIndex = 9;
-            this.panelKitchen.Visible = false;
-            // 
-            // rtbLog
-            // 
-            this.rtbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbLog.Location = new System.Drawing.Point(187, 294);
-            this.rtbLog.Name = "rtbLog";
-            this.rtbLog.ReadOnly = true;
-            this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbLog.Size = new System.Drawing.Size(400, 180);
-            this.rtbLog.TabIndex = 9;
-            this.rtbLog.Text = "";
-            // 
-            // tbLog
-            // 
-            this.tbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tbLog.Location = new System.Drawing.Point(187, 79);
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.ReadOnly = true;
-            this.tbLog.Size = new System.Drawing.Size(400, 180);
-            this.tbLog.TabIndex = 8;
-            // 
-            // timerOneMinute
-            // 
-            this.timerOneMinute.Interval = 1000;
-            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
             // 
             // ColumnName
             // 
@@ -307,20 +260,21 @@ namespace RPElite
             this.ColumnMore.UseColumnTextForButtonValue = true;
             this.ColumnMore.Width = 30;
             // 
-            // rpButtonMarketExit
+            // labelMarket
             // 
-            this.rpButtonMarketExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.rpButtonMarketExit.Location = new System.Drawing.Point(289, 200);
-            this.rpButtonMarketExit.Name = "rpButtonMarketExit";
-            this.rpButtonMarketExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.rpButtonMarketExit.Size = new System.Drawing.Size(63, 23);
-            this.rpButtonMarketExit.TabIndex = 7;
-            this.rpButtonMarketExit.Text = "Назад";
-            this.rpButtonMarketExit.Click += new System.EventHandler(this.RPButtonMarketExit_Click);
+            this.labelMarket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.labelMarket.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelMarket.Location = new System.Drawing.Point(37, 1);
+            this.labelMarket.Name = "labelMarket";
+            this.labelMarket.Size = new System.Drawing.Size(585, 23);
+            this.labelMarket.TabIndex = 1;
+            this.labelMarket.Text = "Магазин";
+            this.labelMarket.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // rpButtonHotel
             // 
             this.rpButtonHotel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonHotel.DrawBorder = true;
             this.rpButtonHotel.Location = new System.Drawing.Point(358, 58);
             this.rpButtonHotel.Name = "rpButtonHotel";
             this.rpButtonHotel.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -331,6 +285,7 @@ namespace RPElite
             // rpButtonShip
             // 
             this.rpButtonShip.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonShip.DrawBorder = true;
             this.rpButtonShip.Location = new System.Drawing.Point(289, 24);
             this.rpButtonShip.Name = "rpButtonShip";
             this.rpButtonShip.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -342,6 +297,7 @@ namespace RPElite
             // rpButtonMarket
             // 
             this.rpButtonMarket.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonMarket.DrawBorder = true;
             this.rpButtonMarket.Location = new System.Drawing.Point(220, 58);
             this.rpButtonMarket.Name = "rpButtonMarket";
             this.rpButtonMarket.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -350,9 +306,30 @@ namespace RPElite
             this.rpButtonMarket.Text = "Market";
             this.rpButtonMarket.Click += new System.EventHandler(this.RPButtonMarket_Click);
             // 
+            // panelShip
+            // 
+            this.panelShip.Controls.Add(this.panelKitchen);
+            this.panelShip.Controls.Add(this.rpButtonLiving);
+            this.panelShip.Controls.Add(this.rpButtonKitchen);
+            this.panelShip.Controls.Add(this.rpButtonCockpit);
+            this.panelShip.Location = new System.Drawing.Point(65, 50);
+            this.panelShip.Name = "panelShip";
+            this.panelShip.Size = new System.Drawing.Size(644, 425);
+            this.panelShip.TabIndex = 10;
+            this.panelShip.Visible = false;
+            // 
+            // panelKitchen
+            // 
+            this.panelKitchen.Location = new System.Drawing.Point(122, 123);
+            this.panelKitchen.Name = "panelKitchen";
+            this.panelKitchen.Size = new System.Drawing.Size(400, 209);
+            this.panelKitchen.TabIndex = 9;
+            this.panelKitchen.Visible = false;
+            // 
             // rpButtonLiving
             // 
             this.rpButtonLiving.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonLiving.DrawBorder = true;
             this.rpButtonLiving.Location = new System.Drawing.Point(358, 53);
             this.rpButtonLiving.Name = "rpButtonLiving";
             this.rpButtonLiving.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -363,6 +340,7 @@ namespace RPElite
             // rpButtonKitchen
             // 
             this.rpButtonKitchen.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonKitchen.DrawBorder = true;
             this.rpButtonKitchen.Location = new System.Drawing.Point(221, 53);
             this.rpButtonKitchen.Name = "rpButtonKitchen";
             this.rpButtonKitchen.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -373,6 +351,7 @@ namespace RPElite
             // rpButtonCockpit
             // 
             this.rpButtonCockpit.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rpButtonCockpit.DrawBorder = true;
             this.rpButtonCockpit.Location = new System.Drawing.Point(289, 23);
             this.rpButtonCockpit.Name = "rpButtonCockpit";
             this.rpButtonCockpit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -381,19 +360,44 @@ namespace RPElite
             this.rpButtonCockpit.Text = "Cockpit";
             this.rpButtonCockpit.Click += new System.EventHandler(this.RPButtonCockpit_Click);
             // 
+            // rtbLog
+            // 
+            this.rtbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtbLog.Location = new System.Drawing.Point(187, 294);
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.ReadOnly = true;
+            this.rtbLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbLog.Size = new System.Drawing.Size(400, 180);
+            this.rtbLog.TabIndex = 9;
+            this.rtbLog.Text = "";
+            // 
+            // tbLog
+            // 
+            this.tbLog.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.tbLog.Location = new System.Drawing.Point(187, 79);
+            this.tbLog.Multiline = true;
+            this.tbLog.Name = "tbLog";
+            this.tbLog.ReadOnly = true;
+            this.tbLog.Size = new System.Drawing.Size(400, 180);
+            this.tbLog.TabIndex = 8;
+            // 
             // buttonReserved
             // 
-            this.buttonSleep.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonSleep.Location = new System.Drawing.Point(423, 50);
-            this.buttonSleep.Name = "buttonReserved";
-            this.buttonSleep.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.buttonSleep.Size = new System.Drawing.Size(63, 23);
-            this.buttonSleep.TabIndex = 6;
-            this.buttonSleep.Text = "Reserved";
+            this.buttonReserved.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonReserved.DrawBorder = true;
+            this.buttonReserved.Location = new System.Drawing.Point(423, 50);
+            this.buttonReserved.Name = "buttonReserved";
+            this.buttonReserved.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.buttonReserved.Size = new System.Drawing.Size(63, 23);
+            this.buttonReserved.TabIndex = 6;
+            this.buttonReserved.Text = "Reserved";
             // 
             // buttonStation
             // 
             this.buttonStation.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonStation.DrawBorder = true;
             this.buttonStation.Location = new System.Drawing.Point(285, 50);
             this.buttonStation.Name = "buttonStation";
             this.buttonStation.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -405,8 +409,7 @@ namespace RPElite
             // buttonShip
             // 
             this.buttonShip.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonShip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.buttonShip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonShip.DrawBorder = true;
             this.buttonShip.Location = new System.Drawing.Point(354, 50);
             this.buttonShip.Name = "buttonShip";
             this.buttonShip.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
@@ -415,7 +418,7 @@ namespace RPElite
             this.buttonShip.Text = "Ship";
             this.buttonShip.Click += new System.EventHandler(this.ButtonShip_Click);
             // 
-            // pbSleep
+            // pbEnergy
             // 
             this.pbEnergy.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbEnergy.BackColor = System.Drawing.Color.LightGray;
@@ -425,7 +428,7 @@ namespace RPElite
             this.pbEnergy.Location = new System.Drawing.Point(286, 34);
             this.pbEnergy.MaxValue = 100;
             this.pbEnergy.MinValue = 0;
-            this.pbEnergy.Name = "pbSleep";
+            this.pbEnergy.Name = "pbEnergy";
             this.pbEnergy.ProgressColor = System.Drawing.Color.BlueViolet;
             this.pbEnergy.ProgressTextType = RPElite.RPProgressBar.RPProgressTextType.Percent;
             this.pbEnergy.ShowProgressText = true;
@@ -453,17 +456,6 @@ namespace RPElite
             this.pbWater.Text = "Water";
             this.pbWater.Value = 86;
             // 
-            // buttonExit
-            // 
-            this.buttonExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonExit.Location = new System.Drawing.Point(354, 265);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
-            this.buttonExit.Size = new System.Drawing.Size(63, 23);
-            this.buttonExit.TabIndex = 0;
-            this.buttonExit.Text = "Hit me";
-            this.buttonExit.Click += new System.EventHandler(this.ButtonExit_Click);
-            // 
             // pbFood
             // 
             this.pbFood.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -482,6 +474,23 @@ namespace RPElite
             this.pbFood.TabIndex = 1;
             this.pbFood.Text = "Food";
             this.pbFood.Value = 86;
+            // 
+            // buttonExit
+            // 
+            this.buttonExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonExit.DrawBorder = true;
+            this.buttonExit.Location = new System.Drawing.Point(354, 265);
+            this.buttonExit.Name = "buttonExit";
+            this.buttonExit.OnHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(112)))), ((int)(((byte)(0)))));
+            this.buttonExit.Size = new System.Drawing.Size(63, 23);
+            this.buttonExit.TabIndex = 0;
+            this.buttonExit.Text = "Hit me";
+            this.buttonExit.Click += new System.EventHandler(this.ButtonExit_Click);
+            // 
+            // timerOneMinute
+            // 
+            this.timerOneMinute.Interval = 1000;
+            this.timerOneMinute.Tick += new System.EventHandler(this.TimerOneSecond_Tick);
             // 
             // Overlay
             // 
@@ -519,7 +528,7 @@ namespace RPElite
         private RPProgressBar pbEnergy;
         private RPButton buttonShip;
         private RPButton buttonStation;
-        private RPButton buttonSleep;
+        private RPButton buttonReserved;
         private System.Windows.Forms.TextBox tbLog;
         private System.Windows.Forms.RichTextBox rtbLog;
         private System.Windows.Forms.Panel panelShip;

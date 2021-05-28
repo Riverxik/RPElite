@@ -35,9 +35,16 @@ namespace RPElite
             Regex searchPattern = new Regex(fileMask);
             string userprofile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string fullPath = userprofile + _elitePath;
-            string[] files = Directory.GetFiles(fullPath).Where(f => searchPattern.IsMatch(f)).ToArray();
-            if (files.Length == 0) return "test.log";
-            return files[0];
+            try
+            {
+                string[] files = Directory.GetFiles(fullPath).Where(f => searchPattern.IsMatch(f)).ToArray();
+                if (files.Length == 0) return "test.log";
+                return files[0];
+            } catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("Не удалось найти папку Elite dangerous.");
+                return "test.log";
+            }
         }
 
         public void ReadLog()
